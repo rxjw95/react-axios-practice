@@ -1,7 +1,7 @@
 import { useReducer, useEffect, useCallback } from 'react';
 
 const initialState = {
-    users: null,
+    data: null,
     loading: false,
     error: null,
 };
@@ -11,19 +11,19 @@ function reducer(state, action) {
         case 'LOADING':
             return {
                 loading: true,
-                users: null,
+                data: null,
                 error: null,
             };
         case 'SUCCESS':
             return {
                 loading: false,
-                users: action.data,
+                data: action.data,
                 error: null,
             };
         case 'ERROR':
             return {
                 loading: false,
-                users: null,
+                data: null,
                 error: action.error,
             };
         default:
@@ -42,7 +42,7 @@ const useAsync = (callback, deps = [], skip = false) => {
         } catch (e) {
             dispatch({ type: 'ERROR', e });
         }
-    }, []);
+    }, deps);
 
     useEffect(() => {
         if (skip) {
